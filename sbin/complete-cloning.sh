@@ -3,11 +3,11 @@
 # Copyright (c) 2018 Pablo Acosta-Serafini
 # See LICENSE for details
 
-source $(dirname "${BASH_SOURCE[0]}")/functions.sh
+# shellcheck disable=SC1090
+source "$(dirname "${BASH_SOURCE[0]}")/functions.sh"
 
-pkg_dir=$(dirname $(current_dir "${BASH_SOURCE[0]}"))
+pkg_dir=$(dirname "$(current_dir "${BASH_SOURCE[0]}")")
 bin_dir=${pkg_dir}/sbin
-cpwd=${PWD}
 
 print_usage_message () {
 	echo -e "complete-cloning.sh\n" >&2
@@ -36,18 +36,21 @@ while getopts ":he" opt; do
 			;;
 	esac
 done
-shift $((${OPTIND} - 1))
+shift $((OPTIND - 1))
 
 # Set up pre-commit Git hooks
 echo "Installing Git hooks"
-source ${bin_dir}/setup-git-hooks.sh
+# shellcheck disable=SC1090
+source "${bin_dir}"/setup-git-hooks.sh
 if [ "${check_email}" == 1 ]; then
 	sed -i -r 's/^check_email=[0|1]$/check_email=1/g' \
-		${pkg_dir}/.hooks/pre-commit
+		"${pkg_dir}"/.hooks/pre-commit
 else
 	sed -i -r 's/^check_email=[0|1]$/check_email=0/g' \
-		${pkg_dir}/.hooks/pre-commit
+		"${pkg_dir}"/.hooks/pre-commit
 fi
 
 # Build documentation
-tox -e py27-repl -- "${bin_dir}/build_docs.py"
+if [ -f "${pkg_dir}"/tox.ini ]; then
+    tox -e py27-repl -- "${bin_dir}/build_docs.py"
+fi
