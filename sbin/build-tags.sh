@@ -1,6 +1,7 @@
 #!/bin/bash
+# shellcheck disable=SC1090,SC1091
 # build-tags.sh
-# Copyright (c) 2018 Pablo Acosta-Serafini
+# Copyright (c) 2013-2018 Pablo Acosta-Serafini
 # See LICENSE for details
 # shellcheck disable=SC1090,SC1091
 
