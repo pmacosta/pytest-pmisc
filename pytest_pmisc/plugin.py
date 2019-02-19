@@ -1,10 +1,11 @@
 # plugin.py
-# Copyright (c) 2018 Pablo Acosta-Serafini
+# Copyright (c) 2018-2019 Pablo Acosta-Serafini
 # See LICENSE for details
-# pylint: disable=C0111,W0212
+# pylint: disable=C0111,R1717,W0212
 
 # Standard library imports
 from __future__ import print_function
+
 # PyPI imports
 import pytest
 from _pytest._code.code import ExceptionInfo
@@ -19,8 +20,9 @@ from pmisc.test import _del_pmisc_test_frames
 @pytest.hookimpl(tryfirst=True)
 def pytest_runtest_makereport(item, call):
     """
-    This is a copy of the _pytest.runner.pytest_runtest_makereport function
-    with only one modification (other than different indentation): the argument
+    Copy of the _pytest.runner.pytest_runtest_makereport function.
+
+    Only one modification (other than different indentation): the argument
     to the function repr_failure is filtered by the _del_pmisc_test_frames
     function so that the report given by Pytest stops at the test line that
     generates the exception, not the line within the pmisc.test module that
@@ -28,7 +30,7 @@ def pytest_runtest_makereport(item, call):
     """
     # pylint: disable=C0103,R0912,R0914
     when = call.when
-    duration = call.stop-call.start
+    duration = call.stop - call.start
     keywords = dict([(x, 1) for x in item.keywords])
     excinfo = call.excinfo
 
@@ -48,12 +50,12 @@ def pytest_runtest_makereport(item, call):
             outcome = "failed"
             if call.when == "call":
                 longrepr = item.repr_failure(_del_pmisc_test_frames(excinfo))
-            else: # exception in setup or teardown
+            else:  # exception in setup or teardown
                 longrepr = item._repr_failure_py(
                     excinfo, style=item.config.option.tbstyle
                 )
     for rwhen, key, content in item._report_sections:
-        sections.append(("Captured %s %s" %(key, rwhen), content))
+        sections.append(("Captured %s %s" % (key, rwhen), content))
     return TestReport(
         item.nodeid,
         item.location,
@@ -62,5 +64,5 @@ def pytest_runtest_makereport(item, call):
         longrepr,
         when,
         sections,
-        duration
+        duration,
     )

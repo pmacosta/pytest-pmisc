@@ -8,6 +8,7 @@
 	{"dir":"", "file":"setup.py"},
 	{"dir":"", "file":"TODO.rst"},
 	{"dir":"", "file":".pylintrc"},
+	{"dir":"", "file":".pydocstyle"},
 	{"dir":"data", "file":"*"},
 	{"dir":"docs", "file":"make.bat"},
 	{"dir":"docs", "file":"Makefile"},

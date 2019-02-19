@@ -1,4 +1,4 @@
-aa
+personal_ws-1.1 en 1489 utf-8
 aaa
 abc
 abcd
@@ -7,6 +7,7 @@ abcdefghijklmnopqrstuvwxyz
 ABCDEFGHIJKLMNOPQRSTUVWXYZ
 ABCDEX
 ABCMeta
+abspath
 abstractmethod
 abstractproperty
 AClass
@@ -282,7 +283,10 @@ df
 dfile
 dfilter
 DFLT
+dict
 dicts
+diff
+Diff
 difflib
 dimgray
 dir
@@ -350,6 +354,7 @@ EPS
 eq
 eqs
 erec
+errisinstance
 errno
 esc
 eval
@@ -601,8 +606,10 @@ isclass
 isclose
 isdflt
 isdigit
+isdir
 isexception
 isf
+isfile
 isfunction
 ishex
 isinstance
@@ -855,6 +862,7 @@ noopt
 nops
 noption
 NOPTION
+noqa
 norder
 np
 npoints
@@ -943,6 +951,7 @@ pargs
 parseString
 partuple
 ParTuple
+pathsep
 pb
 pcol
 pcolor
@@ -977,6 +986,7 @@ plist
 plottable
 plst
 plt
+plugin
 pmisc
 PMISC
 pmsg
@@ -1003,6 +1013,7 @@ PREC
 prf
 priv
 proc
+procutils
 prt
 ps
 ptxt
@@ -1069,6 +1080,7 @@ rdict
 rdiv
 RdPu
 RDVAR
+readline
 readlines
 readme
 README
@@ -1082,6 +1094,7 @@ Rebase
 rect
 recursed
 refstr
+regexp
 regtext
 reinstall
 r'Elapsed
@@ -1231,6 +1244,7 @@ spacings
 spartacus
 SPHINXOPTS
 spl
+splitext
 springgreen
 sqrt
 src
@@ -1284,6 +1298,7 @@ sysconfig
 tanh
 tb
 tbobj
+tbstyle
 tbt
 tchk
 tdata

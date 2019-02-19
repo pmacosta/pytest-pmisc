@@ -1,20 +1,38 @@
 # Makefile
-# Copyright (c) 2018 Pablo Acosta-Serafini
+# Copyright (c) 2013-2019 Pablo Acosta-Serafini
 # See LICENSE for details
 
+PKG_NAME := pytest-pmisc
+PKG_NAME_ALT := $(shell echo $(PKG_NAME) | sed -r -e "s/-/_/g")
 PKG_DIR := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
+REPO_DIR ?= $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
+SOURCE_DIR ?= $(dir $(abspath $(lastword $(MAKEFILE_LIST))))/$(PKG_NAME_ALT)
+EXTRA_DIR ?= $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
+### Custom pylint plugins configuration
+PYLINT_PLUGINS_DIR := $(shell if [ -d $(REPO_DIR)/pylint_plugins ]; then echo "$(REPO_DIR)/pylint_plugins"; fi)
+PYLINT_PLUGINS_LIST := $(shell if [ -d $(REPO_DIR)/pylint_plugins ]; then cd $(REPO_DIR)/pylint_plugins && ls -m *.py | sed 's|.*/||g' | sed 's|, |,|g' | sed 's|\.py||g'; fi)
+PYLINT_CLI_APPEND := $(shell if [ -d $(REPO_DIR)/pylint_plugins ]; then echo "--load-plugins=$(PYLINT_PLUGINS_LIST)"; fi)
+PYLINT_CMD := pylint \
+	--rcfile=$(EXTRA_DIR)/.pylintrc \
+	$(PYLINT_CLI_APPEND) \
+	--output-format=colorized \
+	--reports=no \
+	--score=no
+###
 
 asort:
 	@echo "Sorting Aspell whitelist"
-	@sort -u $(PKG_DIR)/data/aspell-whitelist > $(PKG_DIR)/data/aspell-whitelist.tmp
-	@mv -f $(PKG_DIR)/data/aspell-whitelist.tmp $(PKG_DIR)/data/aspell-whitelist
+	@$(PKG_DIR)/sbin/sort-whitelist.sh $(PKG_DIR)/data/whitelist.en.pws
 
 bdist: meta
 	@echo "Creating binary distribution"
 	@cd $(PKG_DIR); python setup.py bdist
 
-check: FORCE
-	@$(PKG_DIR)/sbin/check_files_compliance.py -tsp
+black:
+	black \
+		$(REPO_DIR) \
+		$(SOURCE_DIR)/ \
+		$(EXTRA_DIR)/docs
 
 clean: FORCE
 	@echo "Cleaning package"
@@ -26,16 +44,17 @@ clean: FORCE
 	@find $(PKG_DIR) -name '*.error' -delete
 	@rm -rf $(PKG_DIR)/build
 	@rm -rf	$(PKG_DIR)/dist
-	@rm -rf $(PKG_DIR)/pytest_pmisc.egg-info
+	@rm -rf $(PKG_DIR)/$(PKG_NAME_ALT).egg-info
 	@rm -rf $(PKG_DIR)/.eggs
 	@rm -rf $(PKG_DIR)/.cache
 	@rm -rf $(PKG_DIR)/docs/_build
 
 distro: docs clean sdist wheel
-	@rm -rf build pytest_pmisc.egg-info
+	@rm -rf build $(PKG_NAME_ALT).egg-info
 
 docs: FORCE
 	@$(PKG_DIR)/sbin/build_docs.py $(ARGS)
+	@cd $(PKG_DIR)/docs && make linkcheck
 
 default:
 	@echo "No default action"
@@ -44,21 +63,20 @@ FORCE:
 
 lint:
 	@echo "Running Pylint on package files"
-	@pylint --rcfile=$(PKG_DIR)/.pylintrc -f colorized -r no $(PKG_DIR)/pytest_pmisc
-	@pylint --rcfile=$(PKG_DIR)/.pylintrc -f colorized -r no $(PKG_DIR)/sbin
-	@pylint --rcfile=$(PKG_DIR)/.pylintrc -f colorized -r no $(PKG_DIR)/tests
-	@pylint --rcfile=$(PKG_DIR)/.pylintrc -f colorized -r no $(PKG_DIR)/docs/support
+	@PYTHONPATH="$(PYTHONPATH):$(PYLINT_PLUGINS_DIR)" $(PYLINT_CMD) $(PKG_DIR)/*.py
+	@PYTHONPATH="$(PYTHONPATH):$(PYLINT_PLUGINS_DIR)" $(PYLINT_CMD) $(PKG_DIR)/$(PKG_NAME_ALT)
+	@PYTHONPATH="$(PYTHONPATH):$(PYLINT_PLUGINS_DIR)" $(PYLINT_CMD) $(PKG_DIR)/sbin
 
 meta: FORCE
 	@echo "Updating package meta-data"
-	@cd $(PKG_DIR)/sbin; ./update_copyright_notice.py
-	@cd $(PKG_DIR)/sbin; ./update_sphinx_conf.py
-	@cd $(PKG_DIR)/sbin; ./gen_req_files.py
-	@cd $(PKG_DIR)/sbin; ./gen_pkg_manifest.py
+	@cd $(PKG_DIR)/sbin && ./update_copyright_notice.py
+	@cd $(PKG_DIR)/sbin && ./update_sphinx_conf.py
+	@cd $(PKG_DIR)/sbin && ./gen_req_files.py
+	@cd $(PKG_DIR)/sbin && ./gen_pkg_manifest.py
 
 sdist: meta
 	@echo "Creating source distribution"
-	@cd $(PKG_DIR); python setup.py sdist --formats=gztar,zip
+	@cd $(PKG_DIR) && python setup.py sdist --formats=zip
 	@$(PKG_DIR)/sbin/list-authors.sh
 
 sterile: clean
@@ -68,13 +86,13 @@ sterile: clean
 test: FORCE
 	@$(PKG_DIR)/sbin/rtest.sh $(ARGS)
 
-upload: distro
+upload: lint distro
 	@twine upload $(PKG_DIR)/dist/*
 
-wheel: meta
+wheel: lint meta
 	@echo "Creating wheel distribution"
 	@cp $(PKG_DIR)/MANIFEST.in $(PKG_DIR)/MANIFEST.in.tmp
-	@cd $(PKG_DIR)/sbin; ./gen_pkg_manifest.py wheel
+	@cd $(PKG_DIR)/sbin && ./gen_pkg_manifest.py wheel
 	@cp -f $(PKG_DIR)/setup.py $(PKG_DIR)/setup.py.tmp
 	@sed -r -i 's/data_files=DATA_FILES,/data_files=None,/g' $(PKG_DIR)/setup.py
 	@$(PKG_DIR)/sbin/make_wheels.sh

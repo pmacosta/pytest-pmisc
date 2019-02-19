@@ -1,5 +1,5 @@
 # pylintrc
-# Copyright (c) 2013-2018 Pablo Acosta-Serafini
+# Copyright (c) 2018-2019 Pablo Acosta-Serafini
 # See LICENSE for details
 
 [MASTER]
@@ -20,7 +20,7 @@ persistent=yes
 
 # List of plugins (as comma separated values of python modules names) to load,
 # usually to register additional checkers.
-load-plugins=
+#load-plugins=
 
 
 [MESSAGES CONTROL]
@@ -130,7 +130,7 @@ docstring-min-length=-1
 [FORMAT]
 
 # Maximum number of characters on a single line.
-max-line-length=230
+max-line-length=88
 
 # Regexp for a line that is allowed to be longer than the limit.
 ignore-long-lines=^\s*(# )?<?https?://\S+>?$
@@ -264,3 +264,9 @@ int-import-graph=
 # Exceptions that will emit a warning when being caught. Defaults to
 # "Exception"
 overgeneral-exceptions=Exception
+
+[SPELLCHECK]
+whitelist=../data/whitelist.en.pws
+
+[HEADER]
+header-ref=../.headerrc
