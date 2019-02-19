@@ -2,28 +2,29 @@
 # update_sphinx_conf.py
 # Copyright (c) 2018-2019 Pablo Acosta-Serafini
 # See LICENSE for details
-# pylint: disable=C0111,F0401,R0914,W0141
+# pylint: disable=C0111,C0413,E1101,F0401,R0914,W0141
 
 # Standard library imports
 import datetime
 import os
 import re
+import sys
+PKG_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.append(os.path.join(PKG_DIR, "pytest_pmisc"))
+# Intra-package update
+import version
 
 
 ###
 # Functions
 ###
 def update_conf():
-    """ Update Sphinx conf.py file """
+    """Update Sphinx conf.py file."""
     # pylint: disable=W0122,W0612
-    pkg_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    version_py = os.path.join(pkg_dir, "pytest_pmisc/version.py")
-    with open(version_py) as fobj:
-        __version__ = version_info = ""
-        exec(compile(fobj.read(), version_py, "exec"))
+    __version__ = version.__version__
     year = datetime.datetime.now().year
-    fname = os.path.join(pkg_dir, "docs", "conf.py")
-    regexp = re.compile(".*2013-(\\d\\d\\d\\d), Pablo Acosta-Serafini")
+    fname = os.path.join(PKG_DIR, "docs", "conf.py")
+    regexp = re.compile(".*2018-(\\d\\d\\d\\d), Pablo Acosta-Serafini")
     with open(fname, "r") as fobj:
         lines = [item.rstrip() for item in fobj.readlines()]
         ret = []
@@ -31,7 +32,7 @@ def update_conf():
             rmatch = regexp.match(line)
             if rmatch:
                 file_year = int(rmatch.group(1))
-                template = "2013-{0}, Pablo Acosta-Serafini"
+                template = "2018-{0}, Pablo Acosta-Serafini"
                 line = line.replace(template.format(file_year), template.format(year))
                 ret.append(line)
             elif line.startswith("version = "):
