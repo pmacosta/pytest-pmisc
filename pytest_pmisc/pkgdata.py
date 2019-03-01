@@ -1,4 +1,4 @@
-# version.py
+# pkgdata.py
 # Copyright (c) 2018-2019 Pablo Acosta-Serafini
 # See LICENSE for details
 # pylint: disable=C0111
@@ -7,7 +7,10 @@
 ###
 # Global variables
 ###
-VERSION_INFO = (1, 0, 2, "final", 0)
+VERSION_INFO = (1, 0, 3, "final", 0)
+SUPPORTED_INTERPS = ["2.7", "3.5", "3.6", "3.7"]
+COPYRIGHT_START = 2018
+PKG_DESC = "Simple Pytest plugin for the pmisc test module"
 
 
 ###

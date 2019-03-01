@@ -5,6 +5,8 @@
 Changelog
 =========
 
+* 1.0.3 [2019-03-01]: Updated package management framework
+
 * 1.0.2 [2019-02-19]: Documentation update
 
 * 1.0.1 [2019-02-19]: Updated to newest dependency versions

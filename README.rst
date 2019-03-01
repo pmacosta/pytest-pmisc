@@ -53,7 +53,7 @@ Interpreter
 ===========
 
 The plugin has been developed and tested with Python 2.7, 3.5, 3.6 and 3.7 under
-Linux (Debian, Ubuntu), Apple OS X and Microsoft Windows
+Linux (Debian, Ubuntu), Apple maxOS and Microsoft Windows
 
 Installing
 ==========

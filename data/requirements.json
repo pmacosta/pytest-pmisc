@@ -36,7 +36,7 @@
 		"optional":false,
 		"url":"http://pmisc.readthedocs.org",
 		"cat":["main", "rtd"],
-		"ver":">=1.5.2",
+		"ver":">=1.5.4",
 		"pos":5
 	}
 }

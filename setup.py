@@ -1,7 +1,7 @@
 # setup.py
-# Copyright (c) 2018-2019 Pablo Acosta-Serafini
+# Copyright (c) 2013-2019 Pablo Acosta-Serafini
 # See LICENSE for details
-# pylint: disable=C0111,E1111,R0904,W0122,W0201,W0621
+# pylint: disable=C0111,E0401,E0601,E1111,R0904,W0122,W0201,W0621
 
 # Taken in large part from:
 #    http://www.jeffknupp.com/blog/2013/08/16/
@@ -23,20 +23,34 @@ from setuptools import setup
 from setuptools.command.test import test as TestCommand
 
 # Intra-package imports
-from sbin.functions import (
-    SUPPORTED_VERS,
-    get_pkg_data_files,
-    load_requirements,
-    python_version,
-)
-
+from pypkg.functions import get_pkg_data_files, load_requirements, python_version
 
 ###
 # Supported interpreter check
 ###
+# When installing from tarball/zip/wheel, path is temporary one and setup.py
+# is not in a directory where its name is the package name, have to find
+# package name by finding location of pkgdata file
+STEM = "pkgdata"
+FOUND = False
+for (DIRPATH, _, FNAMES) in os.walk(os.path.dirname(os.path.abspath(__file__))):
+    for FNAME in FNAMES:
+        if os.path.splitext(os.path.basename(FNAME))[0] == STEM:
+            FNAME = os.path.join(DIRPATH, FNAME)
+            sys.path.append(DIRPATH)
+            import pkgdata
+
+            PKG_NAME = os.path.basename(
+                os.path.dirname(os.path.abspath(sys.modules["pkgdata"].__file__))
+            )
+            FOUND = True
+            break
+if not FOUND:
+    raise RuntimeError("Supported Python interpreter versions cold not be found")
 PYTHON_VER = python_version("{0:0x}".format(sys.hexversion & 0xFFFF0000)[:-4])
-if PYTHON_VER not in SUPPORTED_VERS:
-    sys.exit("Supported interpreter versions: {0}".format(", ".join(SUPPORTED_VERS)))
+SUPPORTED_INTERPS = sorted(pkgdata.SUPPORTED_INTERPS)
+if PYTHON_VER not in SUPPORTED_INTERPS:
+    sys.exit("Supported interpreter versions: {0}".format(", ".join(SUPPORTED_INTERPS)))
 
 
 ###
@@ -69,10 +83,10 @@ def read(*filenames, **kwargs):
 ###
 # Global variables
 ###
-PKG_NAME = "pytest_pmisc"
 REPO = "http://github.com/pmacosta/{pkg_name}/".format(pkg_name=PKG_NAME)
 AUTHOR = "Pablo Acosta-Serafini"
 AUTHOR_EMAIL = "pmasdev@gmail.com"
+LICENSE = "MIT"
 PKG_DIR = os.path.abspath(os.path.dirname(__file__))
 LONG_DESCRIPTION = read(
     os.path.join(PKG_DIR, "README.rst"), os.path.join(PKG_DIR, "CHANGELOG.rst")
@@ -82,6 +96,8 @@ SHORT_DESC = get_short_desc(LONG_DESCRIPTION)
 SHARE_DIR = os.path.join("share", PKG_NAME)
 INSTALL_REQUIRES = load_requirements(PKG_DIR, PYTHON_VER, "source")
 TESTING_REQUIRES = load_requirements(PKG_DIR, PYTHON_VER, "testing")
+if os.environ.get("MERGE_REQUIREMENTS", False):
+    INSTALL_REQUIRES = INSTALL_REQUIRES + TESTING_REQUIRES
 try:
     DATA_FILES = get_pkg_data_files(SHARE_DIR)
 except IOError:
@@ -97,10 +113,10 @@ except IOError:
 ###
 # Extract version (from coveragepy)
 ###
-VERSION_PY = os.path.join(PKG_NAME, "version.py")
+VERSION_PY = os.path.join(PKG_DIR, PKG_NAME, "pkgdata.py")
 with open(VERSION_PY) as fobj:
     __version__ = VERSION_INFO = ""
-    # Execute the code in version.py.
+    # Execute the code in pkgdata.py.
     exec(compile(fobj.read(), VERSION_PY, "exec"))
 if VERSION_INFO[3] == "alpha":
     DEVSTAT = "3 - Alpha"
@@ -148,31 +164,29 @@ setup(
     name=PKG_NAME,
     version=__version__,
     url=REPO,
-    license="MIT",
+    license=LICENSE,
     author=AUTHOR,
     tests_require=TESTING_REQUIRES,
     install_requires=INSTALL_REQUIRES,
-    entry_points={"pytest11": ["pytest_pmisc = pytest_pmisc.plugin"]},
     cmdclass={"tests": Tox},
     author_email=AUTHOR_EMAIL,
     description=SHORT_DESC,
     long_description=LONG_DESCRIPTION,
     packages=[PKG_NAME],
-    data_files=None,
+    data_files=DATA_FILES,
     zip_safe=False,
     platforms="any",
     classifiers=[
-        "Programming Language :: Python :: 2.7",
-        "Programming Language :: Python :: 3.5",
-        "Programming Language :: Python :: 3.6",
-        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: {0}".format(pyver)
+        for pyver in SUPPORTED_INTERPS
+    ]
+    + [
         "Development Status :: " + DEVSTAT,
         "Natural Language :: English",
         "Environment :: Console",
         "Intended Audience :: Developers",
-        "License :: OSI Approved :: MIT License",
+        "License :: OSI Approved :: " + LICENSE + " License",
         "Operating System :: OS Independent",
         "Topic :: Software Development :: Libraries :: Python Modules",
-        "Framework :: Pytest",
     ],
 )
