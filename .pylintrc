@@ -40,7 +40,7 @@ persistent=yes
 # no Warning level messages displayed, use"--disable=all --enable=classes
 # --disable=W"
 # C0302 Too many lines in module
-# C0304 Final newling missing
+# C0304 Final newline missing
 # C0330 Wrong continued indentation
 # E0012 Bad option value
 # I0011 Warning locally suppressed using disable
