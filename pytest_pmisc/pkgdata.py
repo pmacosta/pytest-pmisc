@@ -7,10 +7,11 @@
 ###
 # Global variables
 ###
-VERSION_INFO = (1, 0, 3, "final", 0)
+VERSION_INFO = (1, 0, 5, "final", 0)
 SUPPORTED_INTERPS = ["2.7", "3.5", "3.6", "3.7"]
 COPYRIGHT_START = 2018
 PKG_DESC = "Simple Pytest plugin for the pmisc test module"
+ENTRY_POINTS = {"pytest11": ["pytest_pmisc = pytest_pmisc.plugin"]}
 
 
 ###
