@@ -5,6 +5,8 @@
 Changelog
 =========
 
+* 1.0.6 [2019-03-02]: Updated dependencies to fix functionality
+
 * 1.0.5 [2019-03-02]: Entry point bug fix
 
 * 1.0.4 [2019-03-02]: Critical entry point bug fix
