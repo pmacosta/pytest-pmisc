@@ -7,7 +7,6 @@
 	{"dir":"", "file":"README.rst"},
 	{"dir":"", "file":"setup.py"},
 	{"dir":"", "file":"TODO.rst"},
-	{"dir":"", "file":"tox.ini"},
 	{"dir":"", "file":".headerrc"},
 	{"dir":"", "file":".pylintrc"},
 	{"dir":"", "file":".pydocstyle"},
