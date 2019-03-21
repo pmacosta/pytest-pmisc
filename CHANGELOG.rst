@@ -5,6 +5,8 @@
 Changelog
 =========
 
+* 1.0.7 [2019-03-21]: Updated dependencies
+
 * 1.0.6 [2019-03-02]: Updated dependencies to fix functionality
 
 * 1.0.5 [2019-03-02]: Entry point bug fix

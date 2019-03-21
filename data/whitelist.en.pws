@@ -1,4 +1,4 @@
-personal_ws-1.1 en 1749 utf-8
+personal_ws-1.1 en 1773 utf-8
 a4paper
 aa
 aaa
@@ -30,6 +30,7 @@ ai
 aliceblue
 aline
 alist
+ALLSPHINXOPTS
 alphanums
 antiquewhite
 anumber
@@ -132,6 +133,7 @@ boolean
 btype
 buf
 BuGn
+BUILDDIR
 BuildEnvironment
 builtin
 builtins
@@ -201,6 +203,7 @@ codecs
 codelog
 cogapp
 cogging
+collectionFile
 colno
 ColorSpaceOption
 compat
@@ -318,6 +321,8 @@ DESC
 dest
 detailmenu
 dev
+devhelp
+Devhelp
 DevOps
 DEVSTAT
 df
@@ -332,6 +337,7 @@ Diff
 difflib
 dimgray
 dir
+dirhtml
 dirname
 dirpath
 DIRPATH
@@ -375,6 +381,7 @@ dtype
 dvar
 dvec
 dvector
+dvipdfmx
 E1101
 E1129
 eamsg
@@ -390,6 +397,7 @@ elif
 emsg
 encodings
 encprop
+endif
 endswith
 eng
 EngineeringNotationNumber
@@ -586,6 +594,7 @@ getreprcrash
 getsourcelines
 getter
 Getter
+gettext
 ghostwhite
 giga
 github
@@ -605,6 +614,7 @@ Hettinger
 hexdigits
 hexversion
 HH
+hhp
 hier
 hnf
 hookimpl
@@ -633,6 +643,7 @@ idv
 idx
 IDX
 IEXEC
+ifeq
 ifname
 ifobj
 ifrow
@@ -722,6 +733,7 @@ ivar
 ivector
 IXUSR
 izip
+ja
 json
 JSON
 kcg
@@ -741,6 +753,8 @@ LambdaType
 lang
 lasti
 lastword
+latexpdf
+latexpdfja
 lavenderblush
 lawngreen
 lcount
@@ -830,6 +844,7 @@ macOS
 makedir
 makedirs
 Makefile
+makeinfo
 makereport
 mant
 mapleleaf
@@ -1069,6 +1084,7 @@ palegreen
 paleturquoise
 palevioletred
 papayawhip
+PAPEROPT
 papersize
 param
 Param
@@ -1092,6 +1108,7 @@ pcontracts
 pcsv
 PCSV
 pdf
+pdflatex
 pdict
 pdir
 peachpuff
@@ -1119,6 +1136,7 @@ pkgdata
 pkgdir
 pkgs
 pkl
+platex
 plist
 plottable
 plst
@@ -1161,6 +1179,7 @@ proc
 procutils
 prt
 ps
+pseudoxml
 ptrie
 PTRIE
 ptxt
@@ -1214,6 +1233,9 @@ pythonpath
 PYTHONPATH
 pyver
 pyvers
+qcollectiongenerator
+qhcp
+qthelp
 quickstart
 R0205
 R0903
@@ -1419,6 +1441,7 @@ sig
 SIGINT
 SimpleClass
 sindent
+singlehtml
 sinh
 sitem
 skeys
@@ -1445,6 +1468,7 @@ spellchecker
 SpellChecker
 sphinx
 Sphinx
+SPHINXBUILD
 sphinxcontrib
 SphinxError
 SPHINXOPTS

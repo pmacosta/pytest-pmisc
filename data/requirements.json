@@ -4,7 +4,7 @@
 		"optional":false,
 		"url":"http://sphinx-doc.org",
 		"cat":["docs", "rtd"],
-		"ver":">=1.6.6",
+		"ver":">=1.8.5",
 		"pos":1
 	},
 	"sphinxcontrib-inlinesyntaxhighlight":{
@@ -20,7 +20,7 @@
 		"optional":false,
 		"url":"https://pypi.org/project/sphinxcontrib-shellcheck",
 		"cat":["docs"],
-		"ver":">=1.0.5",
+		"ver":">=1.0.8",
 		"pos":3
 	},
 	"sphinx_rtd_theme":{
@@ -28,7 +28,7 @@
 		"optional":false,
 		"url":"https://github.com/snide/sphinx_rtd_theme",
 		"cat":["docs"],
-		"ver":">=0.1.9",
+		"ver":">=0.4.3",
 		"pos":4
 	},
 	"pmisc":{
@@ -36,7 +36,7 @@
 		"optional":false,
 		"url":"http://pmisc.readthedocs.org",
 		"cat":["main", "rtd"],
-		"ver":">=1.5.5",
+		"ver":">=1.5.8",
 		"pos":5
 	}
 }

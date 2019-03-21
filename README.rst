@@ -2,7 +2,6 @@
 .. Copyright (c) 2018-2019 Pablo Acosta-Serafini
 .. See LICENSE for details
 
-
 .. image:: https://badge.fury.io/py/pytest-pmisc.svg
     :target: https://pypi.org/project/pytest-pmisc
     :alt: PyPI version
@@ -53,7 +52,7 @@ Interpreter
 ===========
 
 The plugin has been developed and tested with Python 2.7, 3.5, 3.6 and 3.7 under
-Linux (Debian, Ubuntu), Apple maxOS and Microsoft Windows
+Linux (Debian, Ubuntu), Apple macOS and Microsoft Windows
 
 Installing
 ==========
@@ -66,7 +65,6 @@ Documentation
 =============
 
 Available at `Read the Docs <https://pytest-pmisc.readthedocs.io>`_
-
 
 License
 =======

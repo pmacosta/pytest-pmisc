@@ -9,7 +9,6 @@ include MANIFEST.in
 include README.rst
 include setup.py
 include TODO.rst
-include tox.ini
 include .headerrc
 include .pylintrc
 include .pydocstyle
